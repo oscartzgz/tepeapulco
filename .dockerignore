@@ -49,3 +49,26 @@
 # Ignore Docker-related files
 /.dockerignore
 /Dockerfile*
+
+
+# Kubernetes
+k8s/
+*.yaml
+!database.yaml  # Si tienes configuración de DB que necesitas en la imagen
+
+# Secrets y configuración
+*.env
+*.key
+secrets.yml
+secrets.yaml
+master.key
+
+# Archivos de desarrollo
+.git
+.gitignore
+.dockerignore
+docker-compose*.yml
+
+# Logs y temporales
+log/*
+tmp/*

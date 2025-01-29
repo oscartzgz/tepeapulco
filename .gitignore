@@ -35,3 +35,11 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Kubernetes secrets
+k8s/base/secrets.yaml
+
+# Otros archivos sensibles que podrías tener
+*.key
+*.pem
+.env*
