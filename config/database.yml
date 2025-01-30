@@ -88,7 +88,7 @@ production:
     <<: *default
     database: tepeapulco_production
     username: tepeapulco
-    password: <%= ENV["DATABASE_PASSWORD"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: tepeapulco_production_cache
