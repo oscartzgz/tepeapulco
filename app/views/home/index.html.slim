@@ -1,1 +1,13 @@
-h1 class="font-bold text-2xl" Tepeapulco
+.flex-col
+  main class="container mx-auto px-4 py-8"
+    section id="bienvenida" class="mb-8"
+      div class="text-center mt-4"
+        h2 class="text-4xl font-bold mb-2" Bienvenidos a Tepeapulco
+        p class="text-lg" Un lugar lleno de historia, cultura y tradiciones...
+      = image_tag "hero_tepeapulco.webp", alt: 'Tepeapulco', class: 'w-full rounded-lg shadow-md'
+
+    section id="destacados" class="grid grid-cols-1 md:grid-cols-3 gap-4"
+      div class="bg-white rounded-lg shadow-md p-6"
+        = image_tag "turismo.webp", alt: "Turismo", class: "w-full rounded-lg mb-4"
+        h3 class="text-2xl font-bold mb-2" Turismo
+        a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" Descubre más
