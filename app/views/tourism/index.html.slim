@@ -1,0 +1,90 @@
+main class="container mx-auto px-4 py-8"
+  / Cabecera de la sección de turismo
+  header.bg-gradient-to-r.from-blue-700.to-green-600.text-white.py-16.px-4.sm:px-6.lg:px-8.relative.overflow-hidden
+    .max-w-7xl.mx-auto
+      h1.text-4xl.font-extrabold.tracking-tight.sm:text-5xl.lg:text-6xl Descubre Tepeapulco
+      p.mt-6.max-w-3xl.text-xl.text-white
+        | Explora la riqueza cultural, histórica y natural de nuestro hermoso municipio
+
+  / Carrusel de lugares destacados
+  - if @featured_spots.any?
+    section.py-12.bg-gray-50
+      .max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
+        h2.text-3xl.font-bold.text-gray-900.mb-8 Lugares Destacados
+        
+        / Contenedor de slides
+        .grid.grid-cols-3.gap-12
+          - @featured_spots.each_with_index do |(spot_id, spot), index|
+            .snap-start.flex-shrink-0.w-80.md:w-96.rounded-lg.shadow-lg.overflow-hidden.bg-white
+              .relative.aspect-w-16.aspect-h-9
+                / - image_path = asset_path("tourism/#{spot['image']}")
+                / = image_tag(image_path, class: "absolute inset-0 w-full h-full object-cover", alt: spot["name"])
+                = image_tag('https://hips.hearstapps.com/hmg-prod/images/walking-on-the-danxia-landform-royalty-free-image-1623252956.jpg?resize=1200:*', class: "w-full h-full object-cover", alt: spot["name"])
+
+              .p-4
+                span.inline-block.px-3.py-1.mb-2.text-sm.font-semibold.text-white.rounded-full class="#{category_color(spot['category'])}" = translate_category(spot["category"])
+                h3.text-xl.font-bold.text-gray-900.mb-2 = spot["name"]
+                p.text-gray-600.line-clamp-2 = spot["short_description"]
+                = link_to "Ver más", tourism_show_path(id: spot_id), class: "mt-4 inline-block text-blue-600 hover:text-blue-800"
+
+  / Filtros por categoría usando Stimulus
+  div data-controller="tourism-filter" data-tourism-filter-current-category-value="#{@selected_category}"
+    section.py-8
+      .max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
+        h2.text-2xl.font-bold.text-gray-900.mb-4 Explora por categoría
+        
+        .flex.flex-wrap.items-center.gap-4
+          button.px-4.py-2.rounded-full data-tourism-filter-target="categoryButton" data-action="click->tourism-filter#filter" class="#{@selected_category.nil? ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
+            | Todos
+          - categories.each do |category|
+            button.px-4.py-2.rounded-full data-tourism-filter-target="categoryButton" data-category=category data-action="click->tourism-filter#filter" class="#{@selected_category == category ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
+              = translate_category(category)
+
+    / Cuadrícula de lugares turísticos con filtrado por Stimulus
+    section.py-12
+      .max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
+        h2#places-section-title.text-2xl.font-bold.text-gray-900.mb-6
+          - if @selected_category
+            = "Lugares #{translate_category(@selected_category).downcase}s"
+          - else
+            | Todos los lugares turísticos
+        
+        - if tourism_spots.any?
+          .grid.grid-cols-1.sm:grid-cols-2.lg:grid-cols-3.xl:grid-cols-4.gap-6
+            - tourism_spots.each do |spot_id, spot|
+              .group.relative.bg-white.rounded-lg.shadow-md.overflow-hidden.hover:shadow-xl.transition.duration-300 data-tourism-filter-target="spotCard" data-category="#{spot['category']}" class="#{@selected_category && spot['category'] != @selected_category ? 'hidden' : ''}"
+                .relative.aspect-w-3.aspect-h-2
+                  / - image_path = asset_path("tourism/#{spot['image']}")
+                  / = image_tag(image_path, class: "w-full h-full object-cover", alt: spot["name"])
+                  = image_tag('https://hips.hearstapps.com/hmg-prod/images/walking-on-the-danxia-landform-royalty-free-image-1623252956.jpg?resize=1200:*', class: "w-full h-full object-cover", alt: spot["name"])
+
+                  .absolute.inset-0.bg-gradient-to-t.from-black.opacity-50.group-hover:opacity-70.transition.duration-300
+                  span.absolute.top-3.right-3.inline-block.px-3.py-1.text-xs.font-semibold.text-white.rounded-full class="#{category_color(spot['category'])}" = translate_category(spot["category"])
+                .p-4
+                  h3.text-lg.font-bold.text-gray-900.mb-2 = spot["name"]
+                  p.text-gray-600.text-sm.line-clamp-2.mb-3 = spot["short_description"]
+                  .text-sm.text-gray-500.mb-3
+                    svg.inline-block.mr-1.w-4.h-4 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                      path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"
+                    span = spot["opening_hours"]
+                  = link_to tourism_show_path(id: spot_id), class: "text-blue-600 hover:text-blue-800 text-sm font-medium" do
+                    span Ver detalles
+                    svg.inline-block.ml-1.w-4.h-4 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                      path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"
+        - else
+          .text-center.py-12
+            p.text-gray-500.text-xl No se encontraron lugares turísticos en esta categoría.
+
+  / Sección de mapa interactivo
+  section.py-12.bg-gray-50
+    .max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
+      h2.text-3xl.font-bold.text-gray-900.mb-8 Mapa Turístico de Tepeapulco
+      .bg-white.rounded-lg.shadow-md.p-4.h-96 data-controller="map" data-map-spots-value="#{tourism_spots.to_json}"
+        / El mapa se renderizará aquí con Leaflet via Stimulus
+
+  / Call to action - Planifica tu visita
+  section.bg-blue-700.text-white.py-16
+    .max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.text-center
+      h2.text-3xl.font-bold.mb-4 ¿Listo para visitar Tepeapulco?
+      p.text-xl.mb-8 Planifica tu visita y descubre todos los tesoros que nuestro municipio tiene para ofrecer
+      = link_to "Solicitar información", "#", class: "inline-block bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition"

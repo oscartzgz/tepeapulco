@@ -11,4 +11,17 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
+
+  get "turismo", to: "tourism#index", as: :tourism_index
+  get "turismo/categoria/:category", to: "tourism#index", as: :tourism_category
+
+  # Rutas amigables para lugares destacados (deben ir antes de la ruta genérica)
+  get "turismo/convento-franciscano", to: "tourism#show", defaults: { id: "ex_convento" }, as: :tourism_ex_convento
+  get "turismo/museo-tepeapulco", to: "tourism#show", defaults: { id: "museo_tepeapulco" }, as: :tourism_museo
+  get "turismo/presa-el-tepozan", to: "tourism#show", defaults: { id: "presa_tepozan" }, as: :tourism_presa
+  get "turismo/centro-historico", to: "tourism#show", defaults: { id: "centro_historico" }, as: :tourism_centro
+  get "turismo/parque-ecoturistico", to: "tourism#show", defaults: { id: "parque_ecoturistico" }, as: :tourism_parque
+
+  # Ruta genérica para todos los lugares turísticos (debe ir después de las rutas específicas)
+  get "turismo/:id", to: "tourism#show", as: :tourism_show
 end

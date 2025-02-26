@@ -1,0 +1,191 @@
+main class="container mx-auto px-4 py-8"
+  / Landing page personalizada para el Ex Convento Franciscano de San Francisco de Asís
+
+  / Hero section con video o imagen panorámica
+  section.relative.h-screen
+    .absolute.inset-0.bg-black.opacity-30.z-10
+    / - image_path = asset_path("tourism/ex_convento.jpg")
+    = image_tag('https://etcetera.com.mx/wp-content/uploads/2021/02/IMG_3741-1024x576.jpg', class: "w-full h-full object-cover", alt: @spot["name"])
+    
+    .absolute.bottom-0.left-0.w-full.p-8.z-20.text-white
+      .max-w-7xl.mx-auto
+        span.inline-block.mb-2.px-4.py-1.rounded-full.bg-opacity-80 class="#{category_color(@spot['category'])}"
+          = translate_category(@spot["category"])
+        h1.text-5xl.font-bold.mb-4.drop-shadow-lg
+          = @spot["name"]
+        p.text-xl.max-w-3xl.drop-shadow-md
+          = @spot["short_description"]
+
+  / Navegación anclada
+  nav.sticky.top-0.bg-white.shadow-md.z-30
+    .max-w-7xl.mx-auto.flex.overflow-x-auto.py-4.px-4.text-sm.space-x-8
+      a.font-medium.text-blue-600.whitespace-nowrap href="#overview" Descripción
+      a.font-medium.text-gray-600.hover:text-blue-600.whitespace-nowrap href="#history" Historia
+      a.font-medium.text-gray-600.hover:text-blue-600.whitespace-nowrap href="#architecture" Arquitectura
+      a.font-medium.text-gray-600.hover:text-blue-600.whitespace-nowrap href="#gallery" Galería
+      a.font-medium.text-gray-600.hover:text-blue-600.whitespace-nowrap href="#location" Ubicación
+      a.font-medium.text-gray-600.hover:text-blue-600.whitespace-nowrap href="#visit" Planifica tu visita
+
+  / Contenido principal con secciones especiales
+  main.py-12
+    .max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
+      / Descripción general
+      section#overview.mb-16
+        .flex.flex-col.lg:flex-row.gap-12
+          .lg:w-7/12
+            h2.text-3xl.font-bold.text-gray-900.mb-6 Acerca del Ex Convento
+            .prose.prose-lg.max-w-none.text-gray-600
+              p = @spot["description"]
+              p El Ex Convento Franciscano de San Francisco de Asís es uno de los monumentos históricos más importantes de Tepeapulco y uno de los primeros establecimientos religiosos de la Nueva España. Su construcción data del siglo XVI y ha sido testigo de importantes acontecimientos históricos.
+              p Este impresionante complejo arquitectónico colonial, además de ser un importante centro religioso, también alberga el Museo de Tepeapulco, donde se pueden admirar piezas arqueológicas, pinturas y documentos históricos que narran la historia del municipio desde la época prehispánica hasta la actualidad.
+          
+          .lg:w-5/12
+            .bg-white.rounded-lg.shadow-md.overflow-hidden
+              .p-6
+                h3.text-xl.font-bold.text-gray-900.mb-4 Información práctica
+                ul.space-y-4
+                  li.flex.items-start
+                    svg.w-5.h-5.text-blue-600.mt-0.5.flex-shrink-0 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                      path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"
+                    .ml-3
+                      span.block.text-gray-700.font-medium Horario
+                      span.text-gray-600 = @spot["opening_hours"]
+                  
+                  li.flex.items-start
+                    svg.w-5.h-5.text-blue-600.mt-0.5.flex-shrink-0 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                      path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"
+                    .ml-3
+                      span.block.text-gray-700.font-medium Ubicación
+                      span.text-gray-600 = @spot["address"]
+                  
+                  li.flex.items-start
+                    svg.w-5.h-5.text-blue-600.mt-0.5.flex-shrink-0 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                      path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"
+                      path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"
+                    .ml-3
+                      span.block.text-gray-700.font-medium Costo
+                      span.text-gray-600 Entrada general: $30 MXN<br>Estudiantes y adultos mayores: $15 MXN<br>Domingos: Entrada libre
+      
+      / Historia
+      section#history.mb-16
+        h2.text-3xl.font-bold.text-gray-900.mb-6 Historia
+        .grid.grid-cols-1.md:grid-cols-2.gap-8
+          .prose.prose-lg.max-w-none.text-gray-600
+            p Este magnífico convento fue fundado por los frailes franciscanos alrededor de 1528, bajo la dirección de Fray Andrés de Olmos. Su construcción se llevó a cabo en varias etapas durante el siglo XVI.
+            p El convento jugó un papel fundamental en la evangelización de la región y se convirtió en un importante centro de educación y cultura. Aquí, Fray Bernardino de Sahagún comenzó su investigación sobre la cultura náhuatl, que más tarde resultaría en su obra monumental "Historia General de las Cosas de Nueva España".
+            p A lo largo de los siglos, el edificio ha tenido diversos usos, desde centro religioso hasta cuartel militar. En la actualidad, funciona como museo y es un testimonio excepcional de la arquitectura conventual del siglo XVI en México.
+          
+          .bg-amber-50.p-6.rounded-lg.shadow-md
+            h3.text-xl.font-bold.text-amber-800.mb-4 Cronología
+            ul.space-y-4
+              li.flex
+                span.text-amber-700.font-bold.w-24.flex-shrink-0 1528
+                span.text-gray-700 Inicio de la construcción del convento por frailes franciscanos
+              li.flex
+                span.text-amber-700.font-bold.w-24.flex-shrink-0 1530-1540
+                span.text-gray-700 Fray Bernardino de Sahagún realiza sus primeros estudios sobre la cultura náhuatl
+              li.flex
+                span.text-amber-700.font-bold.w-24.flex-shrink-0 Siglo XVII
+                span.text-gray-700 El convento alcanza su máximo esplendor como centro religioso y cultural
+              li.flex
+                span.text-amber-700.font-bold.w-24.flex-shrink-0 1860-1870
+                span.text-gray-700 Leyes de Reforma: el convento es secularizado
+              li.flex
+                span.text-amber-700.font-bold.w-24.flex-shrink-0 Siglo XX
+                span.text-gray-700 Restauración del edificio y conversión en museo
+      
+      / Arquitectura
+      section#architecture.mb-16
+        h2.text-3xl.font-bold.text-gray-900.mb-6 Arquitectura
+        .grid.grid-cols-1.md:grid-cols-12.gap-8.items-center
+          .md:col-span-7.bg-white.shadow-lg.rounded-lg.overflow-hidden
+            / - image_path = asset_path("tourism/ex_convento.jpg")
+            = image_tag('https://etcetera.com.mx/wp-content/uploads/2021/02/IMG_3741-1024x576.jpg', class: "w-full", alt: "Arquitectura del Ex Convento")
+          
+          .md:col-span-5.prose.prose-lg.max-w-none.text-gray-600
+            p El Ex Convento representa un magnífico ejemplo de la arquitectura conventual del siglo XVI en la Nueva España, combinando elementos góticos tardíos con el estilo plateresco.
+            p La fachada de la iglesia presenta una portada labrada en cantera con elementos decorativos de influencia renacentista. El claustro, de dos niveles, se caracteriza por sus arcos de medio punto sostenidos por columnas toscanas.
+            p Destacan también:
+            ul
+              li El atrio amplio y abierto
+              li La capilla abierta o de indios
+              li El claustro con sus pasillos abovedados
+              li Los frescos que aún se conservan en algunas paredes
+      
+      / Galería
+      section#gallery.mb-16
+        h2.text-3xl.font-bold.text-gray-900.mb-6 Galería
+        .grid.grid-cols-2.sm:grid-cols-3.lg:grid-cols-4.gap-4
+          - 8.times do |i|
+            .aspect-w-4.aspect-h-3.rounded-lg.overflow-hidden.bg-gray-100.group
+              / - image_path = asset_path("tourism/ex_convento.jpg")
+              = image_tag('https://etcetera.com.mx/wp-content/uploads/2021/02/IMG_3741-1024x576.jpg', class: "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110", alt: "Ex Convento - Imagen #{i+1}")
+      
+      / Ubicación
+      section#location.mb-16
+        h2.text-3xl.font-bold.text-gray-900.mb-6 Ubicación
+        .bg-white.rounded-lg.shadow-md.overflow-hidden
+          .h-96 data-controller="single-map" data-single-map-latitude-value=@spot["latitude"] data-single-map-longitude-value=@spot["longitude"] data-single-map-name-value=@spot["name"]
+            / Mapa se cargará aquí mediante Stimulus
+          .p-4.border-t
+            p.text-gray-700
+              strong Dirección: 
+              span = @spot["address"]
+            p.text-gray-700.mt-2
+              | Puedes llegar fácilmente desde el centro de Tepeapulco. Se encuentra a solo 5 minutos caminando desde la plaza principal.
+      
+      / Planifica tu visita
+      section#visit.mb-16
+        h2.text-3xl.font-bold.text-gray-900.mb-6 Planifica tu visita
+        .grid.grid-cols-1.md:grid-cols-2.gap-8
+          div
+            h3.text-xl.font-bold.text-gray-900.mb-4 Consejos para tu visita
+            ul.space-y-3.text-gray-600
+              li.flex.items-start
+                svg.w-5.h-5.text-green-500.mt-0.5.flex-shrink-0 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                  path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"
+                span.ml-2 Se recomienda visitar en día de semana para evitar aglomeraciones
+              
+              li.flex.items-start
+                svg.w-5.h-5.text-green-500.mt-0.5.flex-shrink-0 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                  path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"
+                span.ml-2 Lleva calzado cómodo para recorrer todo el complejo
+              
+              li.flex.items-start
+                svg.w-5.h-5.text-green-500.mt-0.5.flex-shrink-0 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                  path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"
+                span.ml-2 Las visitas guiadas están disponibles a las 11:00, 13:00 y 16:00 hrs
+              
+              li.flex.items-start
+                svg.w-5.h-5.text-green-500.mt-0.5.flex-shrink-0 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                  path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"
+                span.ml-2 Se permite tomar fotografías sin flash en la mayoría de las áreas
+              
+              li.flex.items-start
+                svg.w-5.h-5.text-green-500.mt-0.5.flex-shrink-0 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                  path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"
+                span.ml-2 La visita completa puede durar aproximadamente 2 horas
+          
+          / Formulario de contacto
+          .bg-gray-50.p-6.rounded-lg.shadow-md
+            h3.text-xl.font-bold.text-gray-900.mb-4 ¿Necesitas más información?
+            form.space-y-4
+              .space-y-2
+                label.block.text-sm.font-medium.text-gray-700 for="name" Nombre
+                input#name.w-full.px-3.py-2.border.border-gray-300.rounded-md.shadow-sm.focus:outline-none.focus:ring-blue-500.focus:border-blue-500 type="text" name="name" required="true"
+              
+              .space-y-2
+                label.block.text-sm.font-medium.text-gray-700 for="email" Correo electrónico
+                input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.shadow-sm.focus:outline-none.focus:ring-blue-500.focus:border-blue-500 type="email" name="email" required="true"
+              
+              .space-y-2
+                label.block.text-sm.font-medium.text-gray-700 for="message" Mensaje
+                textarea#message.w-full.px-3.py-2.border.border-gray-300.rounded-md.shadow-sm.focus:outline-none.focus:ring-blue-500.focus:border-blue-500 name="message" rows="4" required="true"
+              
+              button.w-full.py-2.px-4.border.border-transparent.rounded-md.shadow-sm.text-sm.font-medium.text-white.bg-blue-600.hover:bg-blue-700.focus:outline-none.focus:ring-2.focus:ring-offset-2.focus:ring-blue-500 type="submit" Enviar consulta
+
+  / Botón flotante para regresar arriba
+  .fixed.bottom-6.right-6
+    button.bg-blue-600.text-white.rounded-full.p-3.shadow-lg.hover:bg-blue-700.focus:outline-none.focus:ring-2.focus:ring-offset-2.focus:ring-blue-500 onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Volver arriba"
+      svg.w-6.h-6 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+        path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"

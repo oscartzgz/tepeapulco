@@ -1,0 +1,54 @@
+/ Vista genérica para lugares turísticos sin landing page personalizada
+
+/ Hero section
+section.relative.h-64.sm:h-96.lg:h-[500px]
+  - image_path = asset_path("tourism/#{@spot['image']}")
+  = image_tag(image_path, class: "w-full h-full object-cover", alt: @spot["name"])
+  .absolute.inset-0.bg-black.bg-opacity-40
+  .absolute.bottom-0.left-0.w-full.p-8.text-white
+    .max-w-7xl.mx-auto
+      span.inline-block.mb-2.px-4.py-1.rounded-full.bg-opacity-80 class="#{category_color(@spot['category'])}"
+        = translate_category(@spot["category"])
+      h1.text-4xl.sm:text-5xl.font-bold.mb-4.drop-shadow-lg
+        = @spot["name"]
+
+/ Contenido principal
+main.py-12
+  .max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
+    .flex.flex-col.lg:flex-row.gap-8
+      / Información principal
+      .lg:w-2/3
+        / Descripción
+        section.mb-8
+          h2.text-2xl.font-bold.text-gray-900.mb-4 Acerca de este lugar
+          .prose.prose-lg.max-w-none.text-gray-600
+            p = @spot["description"]
+        
+        / Galería de imágenes
+        section.mb-8
+          h2.text-2xl.font-bold.text-gray-900.mb-4 Galería
+          .grid.grid-cols-2.md:grid-cols-3.gap-4
+            - 3.times do |i|
+              .aspect-w-4.aspect-h-3.rounded-lg.overflow-hidden.bg-gray-100
+                /- image_path = asset_path("tourism/#{@spot['image']}")
+                / = image_tag(image_path, class: "w-full h-full object-cover", alt: "#{@spot['name']} - Imagen #{i+1}")
+                = image_tag('https://hips.hearstapps.com/hmg-prod/images/walking-on-the-danxia-landform-royalty-free-image-1623252956.jpg?resize=1200:*', class: "w-full h-full object-cover", alt: "#{@spot['name']} - Imagen #{i+1}")
+        
+      / Sidebar
+      .lg:w-1/3.space-y-6
+        / Información práctica
+        .bg-white.rounded-lg.shadow-md.overflow-hidden
+          .bg-blue-600.text-white.py-3.px-4
+            h3.font-bold.text-lg Información práctica
+          .p-4.space-y-4
+            / Horario
+            .flex.items-start
+              svg.w-5.h-5.text-blue-600.mt-0.5.flex-shrink-0 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"
+              .ml-3
+                p.text-sm.font-medium.text-gray-900 Horario
+                p.text-sm.text-gray-500 = @spot["opening_hours"]
+            
+            / Ubicación
+            .flex.items-start
+              svg.w-5.h-5.text-blue-600.mt-0.5.flex-shrink-0 xmlns="http://www.w3.org/2000/svg" viewBox

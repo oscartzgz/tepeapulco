@@ -1,0 +1,201 @@
+# Lugares turísticos de Tepeapulco
+ex_convento:
+  id: ex_convento
+  name: "Ex Convento Franciscano de San Francisco de Asís"
+  description: "Construcción del siglo XVI, es uno de los primeros conventos establecidos en la Nueva España. Su arquitectura colonial y su gran importancia histórica lo convierten en un sitio imprescindible."
+  short_description: "Magnífico convento del siglo XVI con gran valor histórico y arquitectónico."
+  category: historical
+  address: "Plaza de la Constitución s/n, Centro, Tepeapulco"
+  latitude: 19.7883
+  longitude: -98.5531
+  featured: true
+  opening_hours: "Martes a Domingo de 9:00 a 18:00 hrs"
+  facilities: 
+    - "Visitas guiadas"
+    - "Museo"
+    - "Área de descanso"
+  image: "ex_convento.jpg"
+  has_landing_page: true
+
+museo_tepeapulco:
+  id: museo_tepeapulco
+  name: "Museo de Tepeapulco"
+  description: "Ubicado en el ex convento de San Francisco, exhibe piezas arqueológicas, pinturas y documentos históricos que narran la historia del municipio desde la época prehispánica hasta la actualidad."
+  short_description: "Museo que preserva y expone el rico patrimonio histórico y cultural de la región."
+  category: cultural
+  address: "Plaza de la Constitución s/n, Centro, Tepeapulco"
+  latitude: 19.7883
+  longitude: -98.5531
+  featured: true
+  opening_hours: "Martes a Domingo de 9:00 a 18:00 hrs"
+  facilities: 
+    - "Visitas guiadas"
+    - "Exposiciones temporales"
+    - "Talleres educativos"
+  image: "museo_tepeapulco.jpg"
+  has_landing_page: true
+
+presa_tepozan:
+  id: presa_tepozan
+  name: "Presa El Tepozán"
+  description: "Hermoso cuerpo de agua rodeado de paisajes naturales, ideal para actividades al aire libre como pesca, paseos en lancha y picnics familiares."
+  short_description: "Espectacular entorno natural ideal para actividades recreativas y descanso."
+  category: natural
+  address: "Carretera Tepeapulco-Santa Bárbara, Tepeapulco"
+  latitude: 19.8103
+  longitude: -98.5339
+  featured: true
+  opening_hours: "Todos los días de 8:00 a 18:00 hrs"
+  facilities: 
+    - "Área para pesca"
+    - "Renta de lanchas"
+    - "Áreas de picnic"
+    - "Estacionamiento"
+  image: "presa_tepozan.jpg"
+  has_landing_page: true
+
+centro_historico:
+  id: centro_historico
+  name: "Centro Histórico de Tepeapulco"
+  description: "Zona con arquitectura colonial que incluye la plaza principal, el Palacio Municipal, el Templo de San Francisco y diversas casonas antiguas con fachadas de estilo colonial."
+  short_description: "Corazón histórico y cultural de Tepeapulco con edificios coloniales y espacios públicos."
+  category: historical
+  address: "Centro de Tepeapulco"
+  latitude: 19.7878
+  longitude: -98.5528
+  featured: true
+  opening_hours: "Acceso libre"
+  facilities: 
+    - "Restaurantes"
+    - "Tiendas de artesanías"
+    - "Plazas públicas"
+  image: "centro_historico.jpg"
+  has_landing_page: true
+
+zona_arqueologica:
+  id: zona_arqueologica
+  name: "Zona Arqueológica de Tepeapulco"
+  description: "Asentamiento prehispánico donde se pueden apreciar vestigios de la cultura teotihuacana y posteriormente tepaneca. Destaca el Templo de Tezcatlipoca."
+  short_description: "Importante sitio arqueológico con vestigios de antiguas civilizaciones mesoamericanas."
+  category: historical
+  address: "Ejidos de Tepeapulco"
+  latitude: 19.7950
+  longitude: -98.5450
+  featured: false
+  opening_hours: "Martes a Domingo de 9:00 a 17:00 hrs"
+  facilities: 
+    - "Visitas guiadas"
+    - "Área arqueológica"
+    - "Miradores"
+  image: "zona_arqueologica.jpg"
+  has_landing_page: false
+
+cerro_la_mesa:
+  id: cerro_la_mesa
+  name: "Cerro de La Mesa"
+  description: "Elevación natural que ofrece impresionantes vistas panorámicas de Tepeapulco y sus alrededores. Ideal para caminatas y fotografía paisajística."
+  short_description: "Mirador natural con espectaculares vistas panorámicas de la región."
+  category: natural
+  address: "Acceso por Carretera Tepeapulco-Apan"
+  latitude: 19.7767
+  longitude: -98.5281
+  featured: false
+  opening_hours: "Acceso libre de 7:00 a 18:00 hrs"
+  facilities: 
+    - "Senderos"
+    - "Miradores"
+    - "Área para picnic"
+  image: "cerro_la_mesa.jpg"
+  has_landing_page: false
+
+parroquia_santiago:
+  id: parroquia_santiago
+  name: "Parroquia de Santiago Apóstol"
+  description: "Templo religioso construido en el siglo XVI con elementos arquitectónicos barrocos y neoclásicos. Su fachada e interior son muestra del arte colonial."
+  short_description: "Impresionante templo religioso con rica historia y arquitectura colonial."
+  category: religious
+  address: "Plaza Principal, Centro, Tepeapulco"
+  latitude: 19.7880
+  longitude: -98.5533
+  featured: false
+  opening_hours: "Lunes a Domingo de 7:00 a 20:00 hrs"
+  facilities: 
+    - "Misas regulares"
+    - "Eventos religiosos"
+    - "Arquitectura histórica"
+  image: "parroquia_santiago.jpg"
+  has_landing_page: false
+
+parque_ecoturistico:
+  id: parque_ecoturistico
+  name: "Parque Ecoturístico Los Frailes"
+  description: "Espacio natural con diversas actividades recreativas y deportivas. Cuenta con áreas verdes, juegos infantiles y espacios para convivencia familiar."
+  short_description: "Área natural con variadas actividades para toda la familia."
+  category: recreational
+  address: "Carretera Tepeapulco-Irolo km 3"
+  latitude: 19.8025
+  longitude: -98.5689
+  featured: true
+  opening_hours: "Miércoles a Domingo de 9:00 a 18:00 hrs"
+  facilities: 
+    - "Tirolesa"
+    - "Senderismo"
+    - "Áreas de juegos"
+    - "Asadores"
+    - "Estacionamiento"
+  image: "parque_ecoturistico.jpg"
+  has_landing_page: true
+
+gastronomia_local:
+  id: gastronomia_local
+  name: "Gastronomía Local - Mercado Municipal"
+  description: "El mercado municipal ofrece una experiencia auténtica para degustar platillos típicos como mixiotes, barbacoa, tlacoyos y pulque de la región."
+  short_description: "Epicentro de la gastronomía tradicional local y sus sabores auténticos."
+  category: gastronomic
+  address: "Calle Hidalgo s/n, Centro, Tepeapulco"
+  latitude: 19.7875
+  longitude: -98.5520
+  featured: false
+  opening_hours: "Lunes a Domingo de 7:00 a 18:00 hrs"
+  facilities: 
+    - "Fondas"
+    - "Puestos de comida"
+    - "Venta de productos locales"
+  image: "gastronomia_local.jpg"
+  has_landing_page: false
+
+hacienda_tlalayote:
+  id: hacienda_tlalayote
+  name: "Hacienda de Tlalayote"
+  description: "Antigua hacienda pulquera que muestra la arquitectura y forma de vida durante el auge de la producción de pulque en la región."
+  short_description: "Hacienda histórica que preserva la tradición pulquera de la región."
+  category: historical
+  address: "Carretera Tepeapulco-Apan km 5"
+  latitude: 19.7660
+  longitude: -98.5390
+  featured: false
+  opening_hours: "Sábados y Domingos de 10:00 a 16:00 hrs"
+  facilities: 
+    - "Recorridos guiados"
+    - "Degustación de pulque"
+    - "Jardines históricos"
+  image: "hacienda_tlalayote.jpg"
+  has_landing_page: false
+
+talleres_artesanales:
+  id: talleres_artesanales
+  name: "Talleres Artesanales de Tepeapulco"
+  description: "Visita los talleres donde artesanos locales elaboran piezas tradicionales como textiles, alfarería y tallado en madera, con posibilidad de participar en demostraciones."
+  short_description: "Conoce el trabajo de artesanos locales y sus técnicas tradicionales."
+  category: cultural
+  address: "Varias ubicaciones en el centro de Tepeapulco"
+  latitude: 19.7870
+  longitude: -98.5510
+  featured: false
+  opening_hours: "Horarios variables según taller"
+  facilities: 
+    - "Demostraciones artesanales"
+    - "Venta de artesanías"
+    - "Talleres participativos"
+  image: "talleres_artesanales.jpg"
+  has_landing_page: false
