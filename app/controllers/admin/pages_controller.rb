@@ -4,7 +4,7 @@ class Admin::PagesController < Admin::BaseController
   def index
     @categories = Category.order(position: :asc, name: :asc)
     @category = params[:category_id].present? ? Category.friendly.find(params[:category_id]) : nil
-    
+
     @pages = Page.all
     @pages = @pages.by_category(@category.id) if @category
     @pages = @pages.order(created_at: :desc)
@@ -95,24 +95,24 @@ class Admin::PagesController < Admin::BaseController
       # Procesamos el HTML directamente para guardarlo
       params[:page][:html] = generate_html_from_content(params[:page][:content], params[:page][:styles])
     end
-    
+
     params.require(:page).permit(
       :title, :slug, :content, :styles, :assets, :status,
       :meta_title, :meta_description, :featured_image,
       :show_in_menu, :menu_order, :category_id, :html
     )
   end
-  
+
   # Método para generar HTML a partir del contenido de GrapeJS
   def generate_html_from_content(content_json, styles)
-    return '' unless content_json.present?
-    
+    return "" unless content_json.present?
+
     begin
       content = JSON.parse(content_json)
-      
+
       # Si ya tiene HTML, usarlo directamente
-      return content['html'] if content.is_a?(Hash) && content['html'].present?
-      
+      return content["html"] if content.is_a?(Hash) && content["html"].present?
+
       # Si no tiene HTML pero tiene componentes, generamos un mensaje para regenerarlo
       "<div class='bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4' role='alert'>
         <p class='font-bold'>HTML no regenerado</p>

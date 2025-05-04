@@ -11,18 +11,17 @@
   = @page.meta_description.presence || "Página #{@page.title}"
 
 / Contenido principal
-.page-content
-  - if @page.html.present?
-    / Renderizar directamente el HTML guardado
-    = raw @page.html
-  - elsif @page.content.present?
-    / Mostrar mensaje de compatibilidad
-    .container.mx-auto.py-8.px-4
-      .bg-yellow-100.border-l-4.border-yellow-500.text-yellow-700.p-4
-        p.font-bold HTML no disponible
-        p Esta página necesita ser actualizada con el editor.
-  - else
-    / Página sin contenido
-    .container.mx-auto.py-8.px-4
-      .text-center.text-gray-500
-        p Esta página aún no tiene contenido.
+- if @page.html.present?
+  / Renderizar directamente el HTML guardado
+  .container = raw @page.html
+- elsif @page.content.present?
+  / Mostrar mensaje de compatibilidad
+  .container.mx-auto.py-8.px-4
+    .bg-yellow-100.border-l-4.border-yellow-500.text-yellow-700.p-4
+      p.font-bold HTML no disponible
+      p Esta página necesita ser actualizada con el editor.
+- else
+  / Página sin contenido
+  .container.mx-auto.py-8.px-4
+    .text-center.text-gray-500
+      p Esta página aún no tiene contenido.
