@@ -1,0 +1,235 @@
+doctype html
+html
+  head
+    title = "Editor de Páginas | #{@page.title}"
+    meta name="viewport" content="width=device-width,initial-scale=1"
+    = csrf_meta_tags
+    = csp_meta_tag
+    
+    / GrapeJS CSS
+    link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/grapesjs/0.21.4/css/grapes.min.css"
+    link rel="stylesheet" href="https://unpkg.com/grapesjs-preset-webpage@1.0.2/dist/grapesjs-preset-webpage.min.css"
+    
+    / Tailwind CSS
+    = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    
+    / GrapeJS JS
+    script src="https://cdnjs.cloudflare.com/ajax/libs/grapesjs/0.21.4/grapes.min.js"
+    script src="https://unpkg.com/grapesjs-blocks-basic@1.0.1/dist/index.js"
+    script src="https://unpkg.com/grapesjs-preset-webpage@1.0.2/dist/index.js"
+    
+    css:
+
+      /* Estilos personalizados */
+      .panel__devices {
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        background: white;
+        border-radius: 3px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        padding: 5px;
+        z-index: 10;
+      }
+      
+      .panel__basic-actions {
+        position: fixed;
+        top: 120px;
+        right: 10px;
+        background: white;
+        border-radius: 3px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        padding: 5px;
+        z-index: 10;
+      }
+      
+      .gjs-block { width: auto; height: auto; }
+      
+      .gjs-one-bg { background-color: #2c3e50; }
+      .gjs-two-color { color: #fff; }
+      .gjs-three-bg { background-color: #34495e; }
+      .gjs-four-color,
+      .gjs-four-color-h:hover { color: #3498db; }
+      
+      #editor-actions {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 16px;
+        background-color: #f9fafb;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      
+      #gjs {
+        height: calc(100vh - 65px);
+      }
+
+  body
+    div#editor-actions
+      h1.text-xl.font-semibold = "Editando: #{@page.title}"
+      div.flex.gap-2
+        button#save-btn.bg-blue-500.hover:bg-blue-600.text-white.px-4.py-2.rounded.focus:outline-none.focus:ring-2.focus:ring-blue-500.focus:ring-opacity-50 
+          | Guardar
+        a.bg-gray-300.hover:bg-gray-400.text-gray-800.px-4.py-2.rounded.focus:outline-none href=admin_pages_path
+          | Volver
+
+    div#gjs data-page-id=@page.id
+    
+    javascript:
+      document.addEventListener('DOMContentLoaded', () => {
+        // Referencia al elemento del editor
+        const editorElement = document.getElementById('gjs');
+        const pageId = '#{@page.id}';
+        let initialContent = '#{j (@page.content.presence || "{}").to_s}';
+        let initialStyles = '#{j (@page.styles.presence || "").to_s}';
+        
+        try {
+          initialContent = JSON.parse(initialContent);
+        } catch(e) {
+          initialContent = {};
+        }
+        
+        // Inicializar editor
+        var editor = grapesjs.init({
+          container : '#gjs',
+          plugins: [
+            'gjs-blocks-basic',
+            'gjs-preset-webpage',
+          ],
+          pluginsOpts: {
+            'gjs-blocks-basic': {},
+            'gjs-preset-webpage': {}
+          },
+        });
+
+        /*
+        const editor = grapesjs.init({
+          container: '#gjs',
+          height: '100%',
+          width: 'auto',
+          storageManager: false,
+          panels: { defaults: [] },
+          deviceManager: {
+            devices: [
+              {
+                name: 'Desktop',
+                width: '',
+              },
+              {
+                name: 'Tablet',
+                width: '768px',
+                widthMedia: '768px',
+              },
+              {
+                name: 'Mobile',
+                width: '375px',
+                widthMedia: '375px',
+              },
+            ]
+          },
+          
+          components: initialContent,
+          style: initialStyles
+        });
+        
+        // Añadir paneles personalizados
+        editor.Panels.addPanel({
+          id: 'panel-devices',
+          el: '.panel__devices',
+          buttons: [
+            {
+              id: 'device-desktop',
+              label: 'Desktop',
+              command: 'set-device-desktop',
+              active: true,
+              className: 'btn btn-primary',
+            },
+            {
+              id: 'device-tablet',
+              label: 'Tablet',
+              command: 'set-device-tablet',
+              className: 'btn',
+            },
+            {
+              id: 'device-mobile',
+              label: 'Mobile',
+              command: 'set-device-mobile',
+              className: 'btn',
+            },
+          ]
+        }); */
+        
+        // Crear botones para dispositivos
+        const panelDevices = document.createElement('div');
+        panelDevices.className = 'panel__devices';
+        document.body.appendChild(panelDevices);
+        
+        // Comandos para cambiar de dispositivo
+        editor.Commands.add('set-device-desktop', {
+          run: editor => editor.setDevice('Desktop')
+        });
+        
+        editor.Commands.add('set-device-tablet', {
+          run: editor => editor.setDevice('Tablet')
+        });
+        
+        editor.Commands.add('set-device-mobile', {
+          run: editor => editor.setDevice('Mobile')
+        });
+        
+        // Manejar guardado
+        document.getElementById('save-btn').addEventListener('click', function(e) {
+          e.preventDefault();
+          // Mostrar estado de guardado
+          const saveBtn = this;
+          const originalText = saveBtn.textContent;
+          saveBtn.textContent = 'Guardando...';
+          saveBtn.disabled = true;
+          
+          // Obtener datos para guardar
+          const content = JSON.stringify(editor.getComponents());
+          const styles = editor.getCss();
+          
+          // Obtener HTML generado
+          const html = editor.getHtml();
+          
+          // Enviar datos al servidor
+          fetch('/admin/pages/' + pageId, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+              page: {
+                content: content,
+                styles: styles,
+                html: html
+              }
+            })
+          })
+          .then(response => {
+            console.log("validando...")
+            if (!response.ok) {
+              throw new Error('Error al guardar');
+            }
+            return response.json();
+          })
+          .then(data => {
+            saveBtn.textContent = '¡Guardado!';
+            setTimeout(() => {
+              saveBtn.textContent = originalText;
+              saveBtn.disabled = false;
+            }, 1500);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            saveBtn.textContent = 'Error';
+            setTimeout(() => {
+              saveBtn.textContent = originalText;
+              saveBtn.disabled = false;
+            }, 1500);
+          });
+        });
+      });
