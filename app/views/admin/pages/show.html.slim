@@ -1,0 +1,73 @@
+.p-6
+  .max-w-7xl.mx-auto
+    .flex.items-center.justify-between.mb-6
+      h1.text-2xl.font-bold = @page.title
+      .flex.space-x-2
+        = link_to "Editar", edit_admin_page_path(@page), class: "text-indigo-600 hover:text-indigo-900"
+        = link_to "Editor visual", editor_admin_page_path(@page), class: "text-purple-600 hover:text-purple-900"
+        = link_to "Volver", admin_pages_path, class: "text-gray-600 hover:text-gray-900"
+    
+    .mb-6
+      .bg-white.shadow.overflow-hidden.sm:rounded-lg
+        .px-4.py-5.sm:px-6
+          h3.text-lg.leading-6.font-medium.text-gray-900 Información de la página
+          p.mt-1.max-w-2xl.text-sm.text-gray-500 Vista previa y detalles
+        
+        .border-t.border-gray-200.px-4.py-5.sm:p-0
+          dl.sm:divide-y.sm:divide-gray-200
+            .py-4.sm:py-5.sm:grid.sm:grid-cols-3.sm:gap-4.sm:px-6
+              dt.text-sm.font-medium.text-gray-500 Título
+              dd.mt-1.text-sm.text-gray-900.sm:mt-0.sm:col-span-2 = @page.title
+            
+            .py-4.sm:py-5.sm:grid.sm:grid-cols-3.sm:gap-4.sm:px-6
+              dt.text-sm.font-medium.text-gray-500 Slug (URL)
+              dd.mt-1.text-sm.text-gray-900.sm:mt-0.sm:col-span-2 = @page.slug
+            
+            .py-4.sm:py-5.sm:grid.sm:grid-cols-3.sm:gap-4.sm:px-6
+              dt.text-sm.font-medium.text-gray-500 Estado
+              dd.mt-1.text-sm.sm:mt-0.sm:col-span-2
+                - if @page.published?
+                  span.px-2.inline-flex.text-xs.leading-5.font-semibold.rounded-full.bg-green-100.text-green-800 Publicada
+                - else
+                  span.px-2.inline-flex.text-xs.leading-5.font-semibold.rounded-full.bg-gray-100.text-gray-800 Borrador
+            
+            .py-4.sm:py-5.sm:grid.sm:grid-cols-3.sm:gap-4.sm:px-6
+              dt.text-sm.font-medium.text-gray-500 Menú
+              dd.mt-1.text-sm.text-gray-900.sm:mt-0.sm:col-span-2
+                - if @page.show_in_menu?
+                  | Visible en el menú (Orden: #{@page.menu_order || 'No especificado'})
+                - else
+                  | No visible en el menú
+            
+            .py-4.sm:py-5.sm:grid.sm:grid-cols-3.sm:gap-4.sm:px-6
+              dt.text-sm.font-medium.text-gray-500 Meta título (SEO)
+              dd.mt-1.text-sm.text-gray-900.sm:mt-0.sm:col-span-2 = @page.meta_title.presence || '-'
+            
+            .py-4.sm:py-5.sm:grid.sm:grid-cols-3.sm:gap-4.sm:px-6
+              dt.text-sm.font-medium.text-gray-500 Meta descripción (SEO)
+              dd.mt-1.text-sm.text-gray-900.sm:mt-0.sm:col-span-2 = @page.meta_description.presence || '-'
+            
+            .py-4.sm:py-5.sm:grid.sm:grid-cols-3.sm:gap-4.sm:px-6
+              dt.text-sm.font-medium.text-gray-500 Creada
+              dd.mt-1.text-sm.text-gray-900.sm:mt-0.sm:col-span-2 = l(@page.created_at, format: :long)
+            
+            .py-4.sm:py-5.sm:grid.sm:grid-cols-3.sm:gap-4.sm:px-6
+              dt.text-sm.font-medium.text-gray-500 Actualizada
+              dd.mt-1.text-sm.text-gray-900.sm:mt-0.sm:col-span-2 = l(@page.updated_at, format: :long)
+    
+    .bg-white.shadow.overflow-hidden.sm:rounded-lg.p-6
+      h3.text-lg.leading-6.font-medium.text-gray-900.mb-4 Vista previa de la página
+      
+      .border.border-gray-200.rounded.p-4
+        .page-preview
+          / Renderizar el contenido de GrapeJS (aplicando estilos internos)
+          - if @page.styles.present?
+            style type="text/css"
+              = raw @page.styles
+          
+          / Contenido de la página
+          div
+            - if @page.content.present?
+              = raw JSON.parse(@page.content).dig("html") rescue "Error al renderizar el contenido"
+            - else
+              p.text-gray-500.italic Esta página aún no tiene contenido. Utiliza el Editor visual para agregar contenido.

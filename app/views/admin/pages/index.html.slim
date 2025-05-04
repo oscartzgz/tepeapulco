@@ -1,0 +1,117 @@
+.p-6
+  .flex.justify-between.items-center.mb-6
+    h1.text-2xl.font-bold 
+      | Gestión de Páginas
+      - if @category
+        span.ml-2.text-gray-500.text-xl 
+          | - Categoría: 
+          span.font-semibold = @category.name
+    
+    .flex.space-x-2
+      .relative
+        button#category-dropdown-btn.inline-flex.items-center.justify-center.bg-white.border.border-gray-300.rounded-md.shadow-sm.px-4.py-2.text-sm.font-medium.text-gray-700.hover:bg-gray-50 type="button"
+          | Filtrar por categoría
+          svg.-mr-1.ml-2.h-5.w-5 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+            path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"
+        
+        #category-dropdown.absolute.right-0.z-10.mt-2.w-56.origin-top-right.rounded-md.bg-white.shadow-lg.ring-1.ring-black.ring-opacity-5.focus:outline-none style="display: none;"
+          .py-1
+            = link_to "Todas las páginas", admin_pages_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+            - @categories.each do |category|
+              = link_to admin_pages_path(category_id: category.slug), class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 #{@category&.id == category.id ? 'bg-gray-100' : ''}" do
+                .flex.items-center
+                  - if category.color.present?
+                    .w-3.h-3.rounded-full.mr-2 style="background-color: #{category.color}"
+                  = category.name
+      
+      = link_to "Nueva Página", new_admin_page_path, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+  
+  javascript:
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdownBtn = document.getElementById('category-dropdown-btn');
+      const dropdown = document.getElementById('category-dropdown');
+      
+      dropdownBtn.addEventListener('click', function() {
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!dropdownBtn.contains(event.target) && !dropdown.contains(event.target)) {
+          dropdown.style.display = 'none';
+        }
+      });
+    });
+  
+  - if @pages.empty?
+    .bg-white.shadow.rounded-lg.p-6.text-center
+      p.text-gray-500 No hay páginas creadas aún.
+      = link_to "Crear la primera página", new_admin_page_path, class: "mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+  - else
+    .bg-white.shadow.overflow-hidden.sm:rounded-lg
+      table.min-w-full.divide-y.divide-gray-200
+        thead.bg-gray-50
+          tr
+            th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Título
+            th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Slug
+            th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Estado
+            th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Categoría
+            th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Menú
+            th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Creado
+            th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Acciones
+        tbody.bg-white.divide-y.divide-gray-200
+          - @pages.each do |page|
+            tr
+              td.px-6.py-4.whitespace-nowrap
+                .text-sm.font-medium.text-gray-900 = page.title
+              td.px-6.py-4.whitespace-nowrap
+                .text-sm.text-gray-500 = page.slug
+              td.px-6.py-4.whitespace-nowrap
+                - if page.published?
+                  span.px-2.inline-flex.text-xs.leading-5.font-semibold.rounded-full.bg-green-100.text-green-800 Publicada
+                - else
+                  span.px-2.inline-flex.text-xs.leading-5.font-semibold.rounded-full.bg-gray-100.text-gray-800 Borrador
+              td.px-6.py-4.whitespace-nowrap
+                - if page.category.present?
+                  .flex.items-center
+                    - if page.category.color.present?
+                      .w-3.h-3.rounded-full.mr-2 style="background-color: #{page.category.color}"
+                    span.text-sm.text-gray-900 = page.category.name
+                - else
+                  span.text-sm.text-gray-500 Sin categoría
+              td.px-6.py-4.whitespace-nowrap
+                .text-sm.text-gray-500
+                  - if page.show_in_menu?
+                    span.px-2.inline-flex.text-xs.leading-5.font-semibold.rounded-full.bg-blue-100.text-blue-800 Visible (#{page.menu_order || '-'})
+                  - else
+                    span.text-gray-500 -
+              td.px-6.py-4.whitespace-nowrap
+                .text-sm.text-gray-500 = l(page.created_at, format: :short)
+              td.px-6.py-4.whitespace-nowrap.text-right.text-sm.font-medium
+                .flex.space-x-2
+                  = link_to admin_page_path(page), class: "text-blue-600 hover:text-blue-900" do
+                    span.sr-only Ver
+                    svg.h-5.w-5 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                      path d="M10 12a2 2 0 100-4 2 2 0 000 4z"
+                      path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"
+                  = link_to editor_admin_page_path(page), class: "text-purple-600 hover:text-purple-900" do
+                    span.sr-only Editor
+                    svg.h-5.w-5 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                      path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                  = link_to edit_admin_page_path(page), class: "text-indigo-600 hover:text-indigo-900" do
+                    span.sr-only Editar
+                    svg.h-5.w-5 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                      path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                      path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"
+                  = link_to admin_page_path(page), data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro de eliminar esta página?" }, class: "text-red-600 hover:text-red-900" do
+                    span.sr-only Eliminar
+                    svg.h-5.w-5 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                      path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"
+                  = link_to toggle_status_admin_page_path(page), data: { turbo_method: :patch }, class: "text-yellow-600 hover:text-yellow-900" do
+                    span.sr-only Cambiar Estado
+                    - if page.published?
+                      svg.h-5.w-5 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                        path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd"
+                    - else
+                      svg.h-5.w-5 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                        path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"
